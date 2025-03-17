@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Display system information
+echo "System Information:"
+
+# Display the operating system name
+echo "Operating System: $(uname -o)"
+
+# Display the kernel version
+echo "Kernel Version: $(uname -r)"
+
+# Display the processor model name
+echo "Processor: $(lscpu | grep 'Model name' | awk -F: '{print $2}' | xargs)"
+
+# Display the number of physical CPU cores
+echo "CPU Cores: $(lscpu | grep '^Core(s) per socket:' | awk '{print $4}')"
+
+# Display the number of logical CPUs
+echo "Logical CPUs: $(lscpu | grep '^CPU(s):' | awk '{print $2}')"
+
+# Display the total memory in human-readable format
+echo "Total Memory: $(free -h | awk '/^Mem:/ {print $2}')"
+
+# Display the available memory in human-readable format
+echo "Available Memory: $(free -h | awk '/^Mem:/ {print $7}')"
