@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Detect the Linux distribution
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    DISTRO=$ID
+else
+    echo "Distro not identified" >&2
+    exit 1
+fi
+
+case $DISTRO in
+    ubuntu|debian)
+        echo "Detected Debian-based system: $DISTRO"
+        sudo apt update && sudo apt install -y curl
+        ;;
+    centos|rhel|fedora)
+        echo "Detected Red Hat-based system: $DISTRO"
+        sudo yum install -y curl
+        ;;
+         alpine)
+        echo "Detected Alpine Linux"
+        sudo apk add --no-cache curl
+        ;;
+    *)
+        echo "Distro not identified" >&2
+        exit 1
+        ;;
+esac
+
+echo "Curl installed successfully"
+
+
